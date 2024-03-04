@@ -1,0 +1,1 @@
+A simple Firebase Cloud Function Agora RTC Token server

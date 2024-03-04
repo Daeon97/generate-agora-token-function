@@ -1,1 +1,1 @@
-A simple Firebase Cloud Function Agora RTC Token server
+An Agora RTC Token Server Firebase Cloud Function

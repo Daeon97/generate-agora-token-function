@@ -1,7 +1,7 @@
 An Agora RTC Token Server Firebase Cloud Function.
 
 This Cloud Function is a 2nd gen HTTPS callable function that can be called by any client as a conventional HTTP request. The `cd functions/src` is divided into several parts:
-- `index.js` which is the entry point of the Cloud Function
+- `index.ts` which is the entry point of the Cloud Function
 - The `mappers` directory which is the next execution point. Mappers validate data from `index.js` before passing them on to `handlers`
 - `handlers` which is the final execution point. This is where the actual stuff is done. If the clients' request gets to this point and execution goes through successfully the response is computed here and sent back to the client
 - `models` which may hold models and/or DTO's and DAO's

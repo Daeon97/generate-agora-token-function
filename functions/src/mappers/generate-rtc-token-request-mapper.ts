@@ -1,21 +1,52 @@
 import { Request } from "firebase-functions/v2/https";
 import { Result } from "../models/result";
+import { Credential } from "../models/credential";
 import { RequestMethod, StatusCode } from "../utils/enums";
+import { RTCTokenGeneratorHandler } from "../handlers/rtc-token-generator-handler";
 
 export class GenerateRTCTokenRequestMapper {
-    constructor() { }
+    public validateRequest(request: Request): Result {
+        return this.checkRequestMethodAllowed(request);
+    }
 
-    public mapRequest(request: Request): Result {
+    private checkRequestMethodAllowed(request: Request): Result {
         const requestMethod = request.method;
 
-        let result: Result;
-
         if (requestMethod !== RequestMethod.POST) {
-            result = new Result(StatusCode.MethodNotAllowed, { 'message': `Request method ${requestMethod} is not allowed` });
+            const result = new Result(
+                StatusCode.MethodNotAllowed,
+                { 'message': `Request method ${requestMethod} is not allowed` }
+            );
             return result;
         }
 
-        result = new Result(StatusCode.Created, { 'message': 'Token created', 'token': '16646246TEST0000', 'channelId': 'TEST_CHANNEL_6', 'userId': '-1' });
-        return result;
+        return this.checkPostRequestHasBody(request);
+    }
+
+    private checkPostRequestHasBody(request: Request): Result {
+        if (!request.body) {
+            const result = new Result(
+                StatusCode.BadRequest,
+                { 'message': 'Request does not specify a body. Please specify the appropriate request body' }
+            );
+            return result;
+        }
+
+        return this.checkPostRequestBodyComplete(request);
+    }
+
+    private checkPostRequestBodyComplete(request: Request): Result {
+        const credential = Credential.fromRequest(request.body);
+
+        if (!credential.channelName || !credential.userId) {
+            const result = new Result(
+                StatusCode.BadRequest,
+                { 'message': 'Request body is incomplete. Please specify all required data' }
+            );
+            return result;
+        }
+
+        const rtcTokenGeneratorHandler = new RTCTokenGeneratorHandler();
+        return rtcTokenGeneratorHandler.handleTokenGenerationUsing(credential);
     }
 }

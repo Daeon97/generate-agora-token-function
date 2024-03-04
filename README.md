@@ -8,4 +8,4 @@ This Cloud Function is a 2nd gen HTTPS callable function that can be called by a
 - `enums` which hold important enums
 
 ## Getting started
-Check out the official Firebase docs at https://firebase.google.com/docs/functions on an introduction to Firebase Cloud Functions if you're new here. Also see https://firebase.google.com/docs/functions/get-started?gen=2nd on how to get started with seeting up and connecting with Firebase Cloud Functions to a Firebase project
+Check out the official Firebase docs at https://firebase.google.com/docs/functions on an introduction to Firebase Cloud Functions if you're new here. Also see https://firebase.google.com/docs/functions/get-started?gen=2nd on how to get started with setting up and connecting with Firebase Cloud Functions to a Firebase project

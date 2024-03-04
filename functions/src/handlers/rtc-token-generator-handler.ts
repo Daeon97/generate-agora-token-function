@@ -2,7 +2,6 @@ import { Result } from "../models/result";
 import { Credential } from "../models/credential";
 import { RtcRole, RtcTokenBuilder } from "agora-token";
 import { StatusCode } from "../utils/enums";
-import { defineString } from "firebase-functions/params";
 
 export class RTCTokenGeneratorHandler {
     public handleTokenGenerationUsing(credential: Credential): Result {
@@ -28,8 +27,8 @@ export class RTCTokenGeneratorHandler {
     }
 
     private generateTokenFrom(credential: Credential): Result {
-        const appID = defineString("APP_ID").value();
-        const appCertificate = defineString("APP_CERTIFICATE").value();
+        const appID = process.env.APP_ID!;
+        const appCertificate = process.env.APP_CERTIFICATE!;
         const channelName = credential.channelName;
         const uid = credential.userId;
         const role = RtcRole.PUBLISHER;
@@ -43,7 +42,7 @@ export class RTCTokenGeneratorHandler {
 
             const result = new Result(
                 StatusCode.Created,
-                { token, 'userId': uid, channelName, 'tokenExpirationSeconds': tokenExpiry, privilegeExpiry }
+                { token, 'userId': uid, channelName, 'tokenExpirationSeconds': tokenExpiry, 'privilegeExpirationSeconds': privilegeExpiry }
             );
             return result;
 

@@ -2,7 +2,7 @@ import { Request } from "firebase-functions/v2/https";
 import { Result } from "../models/result";
 import { Credential } from "../models/credential";
 import { RequestMethod, StatusCode } from "../utils/enums";
-import { RTCTokenGeneratorHandler } from "../handlers/rtc-token-generator-handler";
+import { CredentialValidator } from "../validators/credential-validator";
 
 export class GenerateRTCTokenRequestMapper {
     public validateRequest(request: Request): Result {
@@ -46,7 +46,7 @@ export class GenerateRTCTokenRequestMapper {
             return result;
         }
 
-        const rtcTokenGeneratorHandler = new RTCTokenGeneratorHandler();
-        return rtcTokenGeneratorHandler.handleTokenGenerationUsing(credential);
+        const credentialValidator = new CredentialValidator();
+        return credentialValidator.validateCredential(credential);
     }
 }

@@ -3,30 +3,8 @@ import { Credential } from "../models/credential";
 import { RtcRole, RtcTokenBuilder } from "agora-token";
 import { StatusCode } from "../utils/enums";
 
-export class RTCTokenGeneratorHandler {
-    public handleTokenGenerationUsing(credential: Credential): Result {
-        const tokenExpirationTooLong = this.isTokenExpirationTooLong(credential.tokenExpirationSeconds);
-
-        if (tokenExpirationTooLong) {
-            const result = new Result(
-                StatusCode.PreconditionFailed,
-                { 'message': 'The maximum allowed token expiration time is 86400 seconds or 24 hours. Please specify a shorter or equal token expiration time' }
-            );
-            return result;
-        }
-
-        return this.generateTokenFrom(credential);
-    }
-
-    private isTokenExpirationTooLong(tokenExpirationSeconds?: number): boolean {
-        if (!tokenExpirationSeconds) return false;
-
-        if (tokenExpirationSeconds > 86400) return true;
-
-        return false;
-    }
-
-    private generateTokenFrom(credential: Credential): Result {
+export class RTCTokenGenerator {
+    public generateTokenFrom(credential: Credential): Result {
         const appID = process.env.APP_ID!;
         const appCertificate = process.env.APP_CERTIFICATE!;
         const channelName = credential.channelName;
@@ -49,7 +27,7 @@ export class RTCTokenGeneratorHandler {
         } catch (err) {
             const result = new Result(
                 StatusCode.InternalError,
-                { 'message': 'There was an error generating the token. Try changing the channel name' }
+                { 'message': 'There was an error generating the token. Please check that the values supplied match the API specification' }
             );
             return result;
         }

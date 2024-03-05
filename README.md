@@ -9,7 +9,7 @@ This Cloud Function is a 2nd gen HTTPS callable function that can be called by a
 - `enums` which hold important enums
 
 ## Getting started
-Check out the official Firebase docs at https://firebase.google.com/docs/functions on an introduction to Firebase Cloud Functions if you're new here. Also see https://firebase.google.com/docs/functions/get-started?gen=2nd on how to get started with setting up and connecting with Firebase Cloud Functions to a Firebase project
+Check out the official Firebase docs at https://firebase.google.com/docs/functions on an introduction to Firebase Cloud Functions if you're new here. Also see https://firebase.google.com/docs/functions/get-started?gen=2nd on how to get started with setting up and connecting with Firebase Cloud Functions to a Firebase project. In order to use this function you will need to get your own app ID and certificate. To get started, [https://www.agora.io/en/](create an account with Agora), log into the Agora console, create a new project and copy your projects' app ID and primary certificate into your Cloud Functions environment. See [https://firebase.google.com/docs/functions/config-env?gen=2nd](configure your environment) for instructions on how to set up an environment for Cloud Functions
 
 ## Making the request
 The only supported request method is `POST`. This is because the request to generate an RTC token is meant to collect some data from the client and create a resource- an RTC token in this case. If you try to make any other type of request you will get a `405`. The `POST` request expects a body. If you do not specify one you will get a `400`. The request body should contain:

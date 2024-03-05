@@ -12,12 +12,12 @@ This Cloud Function is a 2nd gen HTTPS callable function that can be called by a
 Check out the official Firebase docs at https://firebase.google.com/docs/functions on an introduction to Firebase Cloud Functions if you're new here. Also see https://firebase.google.com/docs/functions/get-started?gen=2nd on how to get started with setting up and connecting with Firebase Cloud Functions to a Firebase project
 
 ## Making the request
-The only supported request method is `POST`. This is because the request to generate an RTC token is meant to collect some data from the client and create a resource- an RTC token in this case. If you try to make any other type of request you will get a `405`. The `POST` request expects a body. If you do not specify one you will ge a `400`. The request body should contain:
+The only supported request method is `POST`. This is because the request to generate an RTC token is meant to collect some data from the client and create a resource- an RTC token in this case. If you try to make any other type of request you will get a `405`. The `POST` request expects a body. If you do not specify one you will get a `400`. The request body should contain:
 - A required `userId`. Any `integer` within the range of 1 (inclusive) to 100 (inclusive)
 - A required `channelName`. Any `String` comprising any combination of letters a-z, A-Z, digits 0-9 and special characters "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~" and ","
-- An optional `tokenExpirationSeconds`. Any `integer` within the range of 300 (inclusive) to 86400 (inclusive). Defaults if not specified: 86400
+- An optional `tokenExpirationSeconds`. Any `integer` within the range of 300 (inclusive) to 86400 (inclusive). Defaults to 86400 if not specified
 
-Failure to abide by any of these contraints in your request will either lead to a `400`, a`412` or a `500`. Ofcourse, you are free to modify this function to suit your needs. See [LICENSE](https://github.com/Daeon97/agora-token-server-function?tab=MIT-1-ov-file)
+Failure to abide by any of these contraints in your request will either lead to a `400`, `412` or `500`. Ofcourse, you are free to modify this function to suit your needs. See [LICENSE](https://github.com/Daeon97/agora-token-server-function?tab=MIT-1-ov-file)
 
 ## Request
 `POST` `http://<ADDRESS>/<PROJECT>/<REGION>/generateRTCToken`
